@@ -23,6 +23,7 @@ var icon_scissors = load("res://assets/cards/チョキ素材.png")
 signal hovered
 signal unhovered
 signal clicked(card)
+signal slammed # 叩きつけの瞬間に発行
 
 var is_hovered: bool = false
 var is_selected: bool = false
@@ -80,27 +81,28 @@ func set_facing(front: bool):
 # ひっくり返るアニメーション（強化版：迫りくる叩きつけ演出）
 func flip_to_front():
 	var original_scale_y = scale.y # 現在の基本スケール（1.2想定）
-	var peak_scale = original_scale_y * 1.8 # ぐわっと迫るサイズ（約2.16）
+	var peak_scale = original_scale_y * 1.25 # さらに控えめに（約1.5）
 	
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	
-	# 1. 裏返りつつ手前に迫る（巨大化）
+	# 1. 裏返りつつ手前に迫る
 	tween.set_parallel(true)
 	tween.tween_property(self, "scale:x", 0.0, 0.2)
 	tween.tween_property(self, "scale:y", peak_scale, 0.2)
 	
-	# 2. 表面に切り替えて、巨大なまま広げる
+	# 2. 表面に切り替えて広げる
 	tween.set_parallel(false)
 	tween.tween_callback(set_facing.bind(true))
 	tween.set_parallel(true)
 	tween.tween_property(self, "scale:x", peak_scale, 0.2)
 	
-	# 3. 最大サイズで一瞬「溜め」
+	# 3. 溜め
 	tween.set_parallel(false)
-	tween.tween_interval(0.15)
+	tween.tween_interval(0.1) # 溜めも少し短くしてテンポアップ
 	
-	# 4. 素早く叩きつける（元のサイズへ）
-	tween.tween_property(self, "scale", Vector2(original_scale_y, original_scale_y), 0.12).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+	# 4. 素早く叩きつける
+	tween.tween_property(self, "scale", Vector2(original_scale_y, original_scale_y), 0.1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+	tween.tween_callback(func(): slammed.emit()) # 叩きつけの瞬間に通知
 
 func set_hand_data(data: HandData):
 	hand_data = data

@@ -1,20 +1,56 @@
-[gd_scene load_steps=4 format=3 uid="uid://6q0cuul23ngd"]
+[gd_scene load_steps=7 format=3 uid="uid://6q0cuul23ngd"]
 
 [ext_resource type="Script" uid="uid://c4idnefdno0we" path="res://scripts/battle.gd" id="1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_EnemyHP"]
-bg_color = Color(0.8, 0.1, 0.1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BarBG"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_PlayerHP"]
-bg_color = Color(0.1, 0.8, 0.1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_GhostFill"]
+bg_color = Color(1, 0.6, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Empty"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_EnemyFill"]
+bg_color = Color(0.9, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.2)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_PlayerFill"]
+bg_color = Color(0.35, 0.85, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.2)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -56,10 +92,32 @@ theme_override_font_sizes/font_size = 24
 text = "敵の名前"
 horizontal_alignment = 1
 
-[node name="EnemyHPBar" type="ProgressBar" parent="EnemyUI"]
-custom_minimum_size = Vector2(0, 30)
+[node name="EnemyHPContainer" type="Control" parent="EnemyUI"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_EnemyHP")
+
+[node name="EnemyHPUnderBar" type="ProgressBar" parent="EnemyUI/EnemyHPContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_BarBG")
+theme_override_styles/fill = SubResource("StyleBoxFlat_GhostFill")
+value = 100.0
+show_percentage = false
+
+[node name="EnemyHPBar" type="ProgressBar" parent="EnemyUI/EnemyHPContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_Empty")
+theme_override_styles/fill = SubResource("StyleBoxFlat_EnemyFill")
 value = 100.0
 show_percentage = false
 
@@ -111,8 +169,8 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -250.0
-offset_bottom = -250.0
+offset_top = -140.0
+offset_bottom = -140.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -123,29 +181,51 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = 100.0
-offset_bottom = 100.0
+offset_top = 310.0
+offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerHPBar" type="ProgressBar" parent="DuelUI"]
+[node name="PlayerHPContainer" type="Control" parent="DuelUI"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -350.0
-offset_top = -60.0
-offset_right = -100.0
+offset_left = -584.0
+offset_top = -50.0
+offset_right = -263.0
 offset_bottom = -30.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_styles/fill = SubResource("StyleBoxFlat_PlayerHP")
+
+[node name="PlayerHPUnderBar" type="ProgressBar" parent="DuelUI/PlayerHPContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_BarBG")
+theme_override_styles/fill = SubResource("StyleBoxFlat_GhostFill")
 value = 100.0
 show_percentage = false
 
-[node name="PlayerHPLabel" type="Label" parent="DuelUI/PlayerHPBar"]
+[node name="PlayerHPBar" type="ProgressBar" parent="DuelUI/PlayerHPContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_Empty")
+theme_override_styles/fill = SubResource("StyleBoxFlat_PlayerFill")
+value = 100.0
+show_percentage = false
+
+[node name="PlayerHPLabel" type="Label" parent="DuelUI/PlayerHPContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
