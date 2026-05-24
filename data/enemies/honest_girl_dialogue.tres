@@ -1,0 +1,156 @@
+[gd_resource type="Resource" script_class="EnemyDialogueData" load_steps=21 format=3 uid="uid://dlnxv3w4ei48b"]
+
+[ext_resource type="Script" uid="uid://bmqg2yp8qf7fg" path="res://scripts/dialogue_reaction.gd" id="1_reaction"]
+[ext_resource type="Script" uid="uid://k28k4musnjjm" path="res://scripts/enemy_dialogue_data.gd" id="2_dialogue_data"]
+
+[sub_resource type="Resource" id="Resource_angry_ask_paper"]
+script = ExtResource("1_reaction")
+player_line = "（…）"
+enemy_line = "（…）"
+ai_action_override = -1
+ai_behavior_flag = "ANGRY_COUNTER"
+
+[sub_resource type="Resource" id="Resource_angry_ask_rock"]
+script = ExtResource("1_reaction")
+player_line = "（…）"
+enemy_line = "（…）"
+ai_action_override = -1
+ai_behavior_flag = "ANGRY_COUNTER"
+
+[sub_resource type="Resource" id="Resource_angry_ask_scissors"]
+script = ExtResource("1_reaction")
+player_line = "（…）"
+enemy_line = "（…）"
+ai_action_override = -1
+ai_behavior_flag = "ANGRY_COUNTER"
+
+[sub_resource type="Resource" id="Resource_angry_ask_what"]
+script = ExtResource("1_reaction")
+player_line = "（…）"
+enemy_line = "（…）"
+ai_action_override = -1
+ai_behavior_flag = "ANGRY_COUNTER"
+
+[sub_resource type="Resource" id="Resource_angry_chat"]
+script = ExtResource("1_reaction")
+player_line = "落ち着いて、少しお話ししよう？"
+enemy_line = "うぅ…怒ってごめんなさい。もう怒ってないですよ。"
+ai_action_override = -1
+ai_behavior_flag = ""
+
+[sub_resource type="Resource" id="Resource_angry_tell_paper"]
+script = ExtResource("1_reaction")
+player_line = "次は本気でいくからね。"
+enemy_line = "絶対ウソついてるよね！？もう信じないから！"
+ai_action_override = -1
+ai_behavior_flag = "ANGRY_COUNTER"
+
+[sub_resource type="Resource" id="Resource_angry_tell_rock"]
+script = ExtResource("1_reaction")
+player_line = "次は本気でいくからね。"
+enemy_line = "絶対ウソついてるよね！？もう信じないから！"
+ai_action_override = -1
+ai_behavior_flag = "ANGRY_COUNTER"
+
+[sub_resource type="Resource" id="Resource_angry_tell_scissors"]
+script = ExtResource("1_reaction")
+player_line = "次は本気でいくからね。"
+enemy_line = "絶対ウソついてるよね！？もう信じないから！"
+ai_action_override = -1
+ai_behavior_flag = "ANGRY_COUNTER"
+
+[sub_resource type="Resource" id="Resource_ask_paper"]
+script = ExtResource("1_reaction")
+player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
+enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+ai_action_override = -1
+ai_behavior_flag = "MIND_READ"
+
+[sub_resource type="Resource" id="Resource_ask_rock"]
+script = ExtResource("1_reaction")
+player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
+enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+ai_action_override = -1
+ai_behavior_flag = "MIND_READ"
+
+[sub_resource type="Resource" id="Resource_ask_scissors"]
+script = ExtResource("1_reaction")
+player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
+enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+ai_action_override = -1
+ai_behavior_flag = "MIND_READ"
+
+[sub_resource type="Resource" id="Resource_ask_what"]
+script = ExtResource("1_reaction")
+player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
+enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+ai_action_override = -1
+ai_behavior_flag = "MIND_READ"
+
+[sub_resource type="Resource" id="Resource_chat_1"]
+script = ExtResource("1_reaction")
+player_line = "いいお天気だね。絶好のじゃんけん日和だ。"
+enemy_line = "そうですね！でも、緊張しすぎて景色を見る余裕がありません……えへへ。"
+ai_action_override = -1
+ai_behavior_flag = ""
+
+[sub_resource type="Resource" id="Resource_chat_2"]
+script = ExtResource("1_reaction")
+player_line = "お手柔らかに頼むよ。"
+enemy_line = "手加減はしませんよ！私も勝ちたいですから、全力でいきます！"
+ai_action_override = -1
+ai_behavior_flag = ""
+
+[sub_resource type="Resource" id="Resource_chat_3"]
+script = ExtResource("1_reaction")
+player_line = "君は本当に嘘が苦手そうだね。"
+enemy_line = "そ、そんなことないですよ！私だって、本気を出せば騙せます……多分！"
+ai_action_override = -1
+ai_behavior_flag = ""
+
+[sub_resource type="Resource" id="Resource_tell_paper"]
+script = ExtResource("1_reaction")
+player_line = "次は[color=#4dadf7][b]パー[/b][/color]にするよ。どうする？"
+enemy_line = "[color=#4dadf7][b]パー[/b][/color]ですか？教えてくれてありがとう！
+（それなら私は勝てる手を…）"
+ai_action_override = -1
+ai_behavior_flag = "BELIEVE"
+
+[sub_resource type="Resource" id="Resource_tell_rock"]
+script = ExtResource("1_reaction")
+player_line = "次は[color=#ff6b6b][b]グー[/b][/color]を出すよ！本当だよ。"
+enemy_line = "えっ、[color=#ff6b6b][b]グー[/b][/color]ですか？教えてくれてありがとう！
+（それなら私は勝てる手を…）"
+ai_action_override = -1
+ai_behavior_flag = "BELIEVE"
+
+[sub_resource type="Resource" id="Resource_tell_scissors"]
+script = ExtResource("1_reaction")
+player_line = "次は[color=#ffd43b][b]チョキ[/b][/color]を出すよ。信じてね。"
+enemy_line = "[color=#ffd43b][b]チョキ[/b][/color]ですか？教えてくれてありがとう！
+（それなら私は勝てる手を…）"
+ai_action_override = -1
+ai_behavior_flag = "BELIEVE"
+
+[resource]
+script = ExtResource("2_dialogue_data")
+tell_rock = SubResource("Resource_tell_rock")
+tell_scissors = SubResource("Resource_tell_scissors")
+tell_paper = SubResource("Resource_tell_paper")
+ask_rock = SubResource("Resource_ask_rock")
+ask_scissors = SubResource("Resource_ask_scissors")
+ask_paper = SubResource("Resource_ask_paper")
+ask_what = SubResource("Resource_ask_what")
+chat_reactions = Array[ExtResource("1_reaction")]([SubResource("Resource_chat_1"), SubResource("Resource_chat_2"), SubResource("Resource_chat_3")])
+angry_tell_rock = SubResource("Resource_angry_tell_rock")
+angry_tell_scissors = SubResource("Resource_angry_tell_scissors")
+angry_tell_paper = SubResource("Resource_angry_tell_paper")
+angry_ask_rock = SubResource("Resource_angry_ask_rock")
+angry_ask_scissors = SubResource("Resource_angry_ask_scissors")
+angry_ask_paper = SubResource("Resource_angry_ask_paper")
+angry_ask_what = SubResource("Resource_angry_ask_what")
+angry_chat_reactions = Array[ExtResource("1_reaction")]([SubResource("Resource_angry_chat")])
+win_reaction_normal = "やったー！私の勝ちだ！"
+lose_reaction_normal = "あっ…負けちゃった。"
+win_reaction_angry = "あっ、勝てた…"
+lose_reaction_angry = "もー！なんで負けちゃうの！？！？"

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=9 format=3 uid="uid://ccy8v6vpmqi4h"]
+
+[ext_resource type="Resource" path="res://data/enemies/nun_rock.tres" id="1"]
+[ext_resource type="Script" uid="uid://cjqww0tlmp3vh" path="res://scripts/hand_data.gd" id="1_yqxt4"]
+[ext_resource type="Resource" path="res://data/enemies/nun_paper.tres" id="2"]
+[ext_resource type="Resource" path="res://data/enemies/nun_scissors.tres" id="3"]
+[ext_resource type="Texture2D" uid="uid://c1v8wlwlgip3o" path="res://assets/enemies/素直な少女通常.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://cbmr2lhi45iwm" path="res://assets/backgrounds/素直な少女背景.png" id="5"]
+[ext_resource type="Script" uid="uid://be1871xnobecd" path="res://scripts/enemy_data.gd" id="6"]
+[ext_resource type="Resource" uid="uid://dlnxv3w4ei48b" path="res://data/enemies/honest_girl_dialogue.tres" id="7_dialogue"]
+
+[resource]
+script = ExtResource("6")
+name = "素直な少女"
+illustration = ExtResource("4")
+battle_background = ExtResource("5")
+max_hp = 100
+base_hands = Array[ExtResource("1_yqxt4")]([ExtResource("1"), ExtResource("2"), ExtResource("3")])
+dialogue_data = ExtResource("7_dialogue")

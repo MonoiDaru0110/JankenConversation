@@ -4,7 +4,6 @@ extends Control
 var hand_data: HandData
 
 @onready var background = $Background
-@onready var hand_icon = $HandIcon
 @onready var stats_container = $Stats
 @onready var atk_icon = $Stats/AtkIcon
 @onready var def_icon = $Stats/DefIcon
@@ -12,13 +11,16 @@ var hand_data: HandData
 @onready var defense_label = $Stats/DefIcon/DefenseLabel
 
 # ユーザー提供のテクスチャのロード
-var tex_front = load("res://assets/cards/カードデザイン表ラフ.png")
-var tex_back = load("res://assets/cards/カードデザイン裏ラフ.png")
+var tex_front_rock = load("res://assets/cards/カードデザイン表グーラフ.png")
+var tex_front_paper = load("res://assets/cards/カードデザイン表パーラフ.png")
+var tex_front_scissors = load("res://assets/cards/カードデザイン表チョキラフ.png")
+var tex_back = load("res://assets/cards/カードデザイン裏ラフ改.png")
+
 var tex_atk_icon = load("res://assets/cards/カード攻撃力.png")
 var tex_def_icon = load("res://assets/cards/カード防御力.png")
-var icon_rock = load("res://assets/cards/グー素材.png")
-var icon_paper = load("res://assets/cards/パー素材.png")
-var icon_scissors = load("res://assets/cards/チョキ素材.png")
+
+# 各手に対応するテクスチャを保持（初期値はグー）
+var tex_front = tex_front_rock
 
 signal hovered
 signal unhovered
@@ -71,11 +73,9 @@ func set_facing(front: bool):
 	is_front = front
 	if is_front:
 		background.texture = tex_front
-		hand_icon.visible = true
 		stats_container.visible = true
 	else:
 		background.texture = tex_back
-		hand_icon.visible = false
 		stats_container.visible = false
 
 # ひっくり返るアニメーション（強化版：迫りくる叩きつけ演出）
@@ -111,12 +111,13 @@ func set_hand_data(data: HandData):
 	attack_label.text = str(data.attack_power)
 	defense_label.text = str(data.defense_power)
 	
+	# 各手に対応するテクスチャを選択
 	match data.hand_type:
 		HandData.Hand.ROCK:
-			hand_icon.texture = icon_rock
+			tex_front = tex_front_rock
 		HandData.Hand.PAPER:
-			hand_icon.texture = icon_paper
+			tex_front = tex_front_paper
 		HandData.Hand.SCISSORS:
-			hand_icon.texture = icon_scissors
+			tex_front = tex_front_scissors
 	
 	set_facing(is_front)

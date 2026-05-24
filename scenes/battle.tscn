@@ -1,6 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://6q0cuul23ngd"]
+[gd_scene load_steps=11 format=3 uid="uid://6q0cuul23ngd"]
 
 [ext_resource type="Script" uid="uid://c4idnefdno0we" path="res://scripts/battle.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dvm5rss88lorx" path="res://assets/backgrounds/戦闘背景仮.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/talk_ui.tscn" id="3_talk"]
+[ext_resource type="Resource" uid="uid://ccy8v6vpmqi4h" path="res://data/enemies/honest_girl.tres" id="4_girl"]
+[ext_resource type="PackedScene" path="res://scenes/speech_bubble.tscn" id="5_bubble"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BarBG"]
 bg_color = Color(0.1, 0.1, 0.1, 1)
@@ -52,6 +56,31 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 corner_detail = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Log"]
+bg_color = Color(0.98, 0.96, 0.90, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22, 0.16, 0.1, 0.4)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_size = 6
+shadow_color = Color(0.22, 0.15, 0.08, 0.12)
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_LogTab"]
+bg_color = Color(0.98, 0.96, 0.90, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_color = Color(0.22, 0.16, 0.1, 0.4)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
+
 [node name="Battle" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -60,6 +89,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
+enemy_data = ExtResource("4_girl")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="EnemyHandContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -73,6 +114,19 @@ offset_bottom = 450.0
 grow_horizontal = 0
 theme_override_constants/separation = 10
 alignment = 2
+
+[node name="EnemyIllustration" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 237.0
+offset_right = 300.0
+offset_bottom = 923.0
+grow_horizontal = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="EnemyUI" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -129,7 +183,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 color = Color(0, 0, 0, 0.588235)
 
 [node name="PlayerUI" type="Control" parent="."]
@@ -245,12 +298,91 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -140.0
+offset_left = -300.0
+offset_top = -160.0
 offset_right = -50.0
 offset_bottom = -80.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 disabled = true
-text = "手を確定"
+text = "この手を出す"
+
+[node name="TalkUI" parent="." instance=ExtResource("3_talk")]
+layout_mode = 1
+
+[node name="EnemySpeechBubble" parent="." instance=ExtResource("5_bubble")]
+layout_mode = 1
+offset_left = 1100.0
+offset_top = 280.0
+offset_right = 1600.0
+offset_bottom = 430.0
+
+[node name="PlayerSpeechBubble" parent="." instance=ExtResource("5_bubble")]
+layout_mode = 1
+offset_left = 1100.0
+offset_top = 620.0
+offset_right = 1600.0
+offset_bottom = 770.0
+is_player = true
+
+
+[node name="TalkLogUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -420.0
+offset_right = 450.0
+offset_bottom = -70.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="TalkLogUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Log")
+
+[node name="MarginContainer" type="MarginContainer" parent="TalkLogUI/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TalkLogUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+horizontal_scroll_mode = 3
+
+[node name="LogText" type="RichTextLabel" parent="TalkLogUI/PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.22, 0.16, 0.1, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+scroll_following = true
+
+[node name="ToggleButton" type="Button" parent="TalkLogUI"]
+layout_mode = 0
+offset_top = -40.0
+offset_right = 160.0
+offset_bottom = 0.0
+theme_override_colors/font_color = Color(0.22, 0.16, 0.1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_LogTab")
+theme_override_styles/hover = SubResource("StyleBoxFlat_LogTab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_LogTab")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_LogTab")
+theme_override_styles/focus = SubResource("StyleBoxFlat_LogTab")
+text = "▼ 会話ログを隠す"
+

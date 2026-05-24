@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="じゃんけん×会話読みあい"
-run/main_scene="res://scenes/battle.tscn"
+run/main_scene="uid://6q0cuul23ngd"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
