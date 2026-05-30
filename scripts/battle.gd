@@ -49,30 +49,37 @@ var is_angry: bool = false
 var last_player_hand: int = -1
 var talk_performed_this_turn: bool = false
 
-var is_log_minimized: bool = false
-var log_original_y: float = 0.0
-var log_minimized_y: float = 0.0
 
+
+
+const COLOR_ROCK: String = "#4dadf7"
+const COLOR_PAPER: String = "#40c057"
+const COLOR_SCISSORS: String = "#ff6b6b"
+
+const CARD_SCENE = preload("res://scenes/card.tscn")
+
+# テキスト内の「グー」「チョキ」「パー」を自動で色付き太字にする
+func format_hand_tags(text: String) -> String:
+	if text == "": return ""
+	var formatted = text
+	formatted = formatted.replace("グー", "[color=" + COLOR_ROCK + "][b]グー[/b][/color]")
+	formatted = formatted.replace("パー", "[color=" + COLOR_PAPER + "][b]パー[/b][/color]")
+	formatted = formatted.replace("チョキ", "[color=" + COLOR_SCISSORS + "][b]チョキ[/b][/color]")
+	return formatted
 
 var selected_card: Control = null
 var is_janken_phase: bool = false
 var is_game_over: bool = false
 var button_pulse_tween: Tween
 
-const CARD_SCENE = preload("res://scenes/card.tscn")
-
 func _ready():
 	setup_battle()
 	if dimmer: dimmer.gui_input.connect(_on_dimmer_gui_input)
 	if talk_ui: talk_ui.talk_performed.connect(_on_talk_performed)
 	
-	# 会話ログの初期座標保存と開閉ボタンの接続
+	# 会話ログの開閉ボタンの接続
 	if talk_log_ui and log_toggle_button:
 		log_toggle_button.pressed.connect(_on_log_toggle_pressed)
-		get_tree().process_frame.connect(func():
-			log_original_y = talk_log_ui.position.y
-			log_minimized_y = log_original_y + 350.0
-		, CONNECT_ONE_SHOT)
 	
 	if confirm_button: 
 
@@ -349,6 +356,26 @@ func resolve_janken_outcome(p_card, e_card):
 		e_damage = max(0, p_atk - e_def)
 		print("あいこ！ 互いにダメージ")
 	
+	# じゃんけん結果を会話ログに追加
+	var p_hand_name = "グー"
+	if p_type == 1: p_hand_name = "パー"
+	elif p_type == 2: p_hand_name = "チョキ"
+	
+	var e_hand_name = "グー"
+	if e_type == 1: e_hand_name = "パー"
+	elif e_type == 2: e_hand_name = "チョキ"
+	
+	var outcome_log = "[color=#a28d75] ⚔ じゃんけん結果 ⚔[/color]\n"
+	outcome_log += "あなた（%s） vs %s（%s）\n" % [p_hand_name, enemy_name_label.text, e_hand_name]
+	if result == 1:
+		outcome_log += "[color=#35c0a0][b]あなたの勝利！[/b][/color] (敵に %d ダメージ)" % e_damage
+	elif result == 2:
+		outcome_log += "[color=#eb7a94][b]%sの勝利！[/b][/color] (あなたに %d ダメージ)" % [enemy_name_label.text, p_damage]
+	else:
+		outcome_log += "[color=#d1a153][b]あいこ！[/b][/color] (あなた: %d ダメージ / 敵: %d ダメージ)" % [p_damage, e_damage]
+	
+	add_to_talk_log("", false, outcome_log)
+	
 	# 攻撃アニメーションの再生
 	await play_attack_animation(p_card, e_card, result)
 	
@@ -423,7 +450,7 @@ func play_outcome_dialogue(outcome_text: String, is_shake: bool):
 	if is_shake:
 		shake_screen(8.0, 0.25)
 		
-	enemy_speech_bubble.show_bubble(outcome_text)
+	enemy_speech_bubble.show_bubble(format_hand_tags(outcome_text))
 	
 	# セリフ送り（タイピング）の終了を待つ
 	var elapsed = 0.0
@@ -793,8 +820,8 @@ func _on_talk_performed(category: String, sub_option: String):
 				if sub_option == "PAPER": hand_name = "パー"
 				elif sub_option == "SCISSORS": hand_name = "チョキ"
 				
-				player_text = "次は[color=#ff6b6b][b]" + hand_name + "[/b][/color]を出すよ！本当だよ。"
-				enemy_text = "えっ、[color=#ff6b6b][b]" + hand_name + "[/b][/color]ですか？教えてくれてありがとう！\n（それなら私は勝てる手を…）"
+				player_text = "次は" + hand_name + "を出すよ！本当だよ。"
+				enemy_text = "えっ、" + hand_name + "ですか？教えてくれてありがとう！\n（それなら私は勝てる手を…）"
 				active_ai_flag = "BELIEVE"
 			elif category == "ASK":
 				# 聞く：思考の透視。その場で敵の手(A)を決定し、Aを出させ、次のターンにそれを強制
@@ -808,7 +835,7 @@ func _on_talk_performed(category: String, sub_option: String):
 				if expected_hand == 1: hand_name = "パー"
 				elif expected_hand == 2: hand_name = "チョキ"
 				
-				enemy_text = "（次は[color=#4dadf7][b]" + hand_name + "[/b][/color]を出そうかな…）"
+				enemy_text = "（次は" + hand_name + "を出そうかな…）"
 				player_text = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
 				
 				active_ai_override = expected_hand
@@ -859,7 +886,7 @@ func play_conversation(player_text: String, enemy_text: String):
 	hand_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	# プレイヤーの発言
-	player_speech_bubble.show_bubble(player_text)
+	player_speech_bubble.show_bubble(format_hand_tags(player_text))
 	add_to_talk_log("あなた", true, player_text)
 	await wait_for_step(player_speech_bubble)
 	
@@ -867,7 +894,7 @@ func play_conversation(player_text: String, enemy_text: String):
 	await get_tree().create_timer(0.3).timeout
 	
 	# 敵のリアクション
-	enemy_speech_bubble.show_bubble(enemy_text)
+	enemy_speech_bubble.show_bubble(format_hand_tags(enemy_text))
 	add_to_talk_log(enemy_name_label.text, false, enemy_text)
 	await wait_for_step(enemy_speech_bubble)
 	
@@ -929,22 +956,22 @@ func _on_conversation_click():
 	conversation_advanced.emit()
 
 func _on_log_toggle_pressed():
-	is_log_minimized = !is_log_minimized
-	
-	var target_y = log_minimized_y if is_log_minimized else log_original_y
-	var btn_text = "▲ 会話ログを開く" if is_log_minimized else "▼ 会話ログを隠す"
-	
-	log_toggle_button.text = btn_text
-	
-	# スムーズなスライドTweenアニメーション (TRANS_CUBIC, EASE_OUT)
-	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tween.tween_property(talk_log_ui, "position:y", target_y, 0.4)
+	var panel = talk_log_ui.get_node("PanelContainer")
+	if panel:
+		panel.visible = !panel.visible
+		var btn_text = "▲ ログを開く" if not panel.visible else "▼ ログを隠す"
+		log_toggle_button.text = btn_text
+		log_toggle_button.release_focus()
 
 func add_to_talk_log(speaker_name: String, is_player_speaker: bool, text: String):
 	if text == "" or not log_text_label: return
 	
-	var color_code = "#35c0a0" if is_player_speaker else "#eb7a94"
-	var name_tag = "[color=" + color_code + "][b]" + speaker_name + "[/b][/color]"
+	var formatted_text = format_hand_tags(text)
 	
-	# ログへの追加（RichTextLabelは自動で最新の下端へスクロールします）
-	log_text_label.text += name_tag + ": " + text + "\n\n"
+	if speaker_name == "":
+		# 話者名が空の場合はシステムメッセージとしてそのまま追加
+		log_text_label.text += formatted_text + "\n\n"
+	else:
+		var color_code = "#35c0a0" if is_player_speaker else "#eb7a94"
+		var name_tag = "[color=" + color_code + "][b]" + speaker_name + "[/b][/color]"
+		log_text_label.text += name_tag + ": " + formatted_text + "\n\n"

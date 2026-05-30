@@ -74,11 +74,11 @@ shadow_offset = Vector2(0, 4)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_LogTab"]
 bg_color = Color(0.98, 0.96, 0.90, 0.95)
 border_width_left = 2
-border_width_top = 2
+border_width_bottom = 2
 border_width_right = 2
 border_color = Color(0.22, 0.16, 0.1, 0.4)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
 
 
 [node name="Battle" type="Control"]
@@ -359,14 +359,13 @@ theme_override_constants/margin_bottom = 16
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TalkLogUI/PanelContainer/MarginContainer"]
 layout_mode = 2
-mouse_filter = 2
 horizontal_scroll_mode = 3
 
 [node name="LogText" type="RichTextLabel" parent="TalkLogUI/PanelContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+mouse_filter = 1
 theme_override_colors/default_color = Color(0.22, 0.16, 0.1, 1)
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
@@ -374,15 +373,19 @@ scroll_following = true
 
 [node name="ToggleButton" type="Button" parent="TalkLogUI"]
 layout_mode = 0
-offset_top = -40.0
+offset_top = 350.0
 offset_right = 160.0
-offset_bottom = 0.0
+offset_bottom = 390.0
 theme_override_colors/font_color = Color(0.22, 0.16, 0.1, 1)
+theme_override_colors/font_pressed_color = Color(0.22, 0.16, 0.1, 1)
+theme_override_colors/font_hover_color = Color(0.22, 0.16, 0.1, 1)
+theme_override_colors/font_focus_color = Color(0.22, 0.16, 0.1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.22, 0.16, 0.1, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_LogTab")
 theme_override_styles/hover = SubResource("StyleBoxFlat_LogTab")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_LogTab")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_LogTab")
 theme_override_styles/focus = SubResource("StyleBoxFlat_LogTab")
-text = "▼ 会話ログを隠す"
+text = "▼ ログを隠す"
 

@@ -62,28 +62,28 @@ ai_behavior_flag = "ANGRY_COUNTER"
 [sub_resource type="Resource" id="Resource_ask_paper"]
 script = ExtResource("1_reaction")
 player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
-enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+enemy_line = "（次は%sを出そうかな…）"
 ai_action_override = -1
 ai_behavior_flag = "MIND_READ"
 
 [sub_resource type="Resource" id="Resource_ask_rock"]
 script = ExtResource("1_reaction")
 player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
-enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+enemy_line = "（次は%sを出そうかな…）"
 ai_action_override = -1
 ai_behavior_flag = "MIND_READ"
 
 [sub_resource type="Resource" id="Resource_ask_scissors"]
 script = ExtResource("1_reaction")
 player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
-enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+enemy_line = "（次は%sを出そうかな…）"
 ai_action_override = -1
 ai_behavior_flag = "MIND_READ"
 
 [sub_resource type="Resource" id="Resource_ask_what"]
 script = ExtResource("1_reaction")
 player_line = "（思考が筒抜けだ…よし、勝てる手を準備しよう）"
-enemy_line = "（次は[color=#4dadf7][b]%s[/b][/color]を出そうかな…）"
+enemy_line = "（次は%sを出そうかな…）"
 ai_action_override = -1
 ai_behavior_flag = "MIND_READ"
 
@@ -110,24 +110,24 @@ ai_behavior_flag = ""
 
 [sub_resource type="Resource" id="Resource_tell_paper"]
 script = ExtResource("1_reaction")
-player_line = "次は[color=#4dadf7][b]パー[/b][/color]にするよ。どうする？"
-enemy_line = "[color=#4dadf7][b]パー[/b][/color]ですか？教えてくれてありがとう！
+player_line = "次はパーにするよ。どうする？"
+enemy_line = "パーですか？教えてくれてありがとう！
 （それなら私は勝てる手を…）"
 ai_action_override = -1
 ai_behavior_flag = "BELIEVE"
 
 [sub_resource type="Resource" id="Resource_tell_rock"]
 script = ExtResource("1_reaction")
-player_line = "次は[color=#ff6b6b][b]グー[/b][/color]を出すよ！本当だよ。"
-enemy_line = "えっ、[color=#ff6b6b][b]グー[/b][/color]ですか？教えてくれてありがとう！
+player_line = "次はグーを出すよ！本当だよ。"
+enemy_line = "えっ、グーですか？教えてくれてありがとう！
 （それなら私は勝てる手を…）"
 ai_action_override = -1
 ai_behavior_flag = "BELIEVE"
 
 [sub_resource type="Resource" id="Resource_tell_scissors"]
 script = ExtResource("1_reaction")
-player_line = "次は[color=#ffd43b][b]チョキ[/b][/color]を出すよ。信じてね。"
-enemy_line = "[color=#ffd43b][b]チョキ[/b][/color]ですか？教えてくれてありがとう！
+player_line = "次はチョキを出すよ。信じてね。"
+enemy_line = "チョキですか？教えてくれてありがとう！
 （それなら私は勝てる手を…）"
 ai_action_override = -1
 ai_behavior_flag = "BELIEVE"
